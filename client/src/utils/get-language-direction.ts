@@ -1,4 +1,4 @@
-import type { BlogLanguage } from "@/types/blog.types";
+import type { BlogLanguage } from "@/features/blogs/types/blog.types";
 
 export const getLanguageDirection = (
     language: BlogLanguage

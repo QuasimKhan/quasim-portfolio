@@ -1,6 +1,4 @@
-import type { Blog } from "@/features/blogs/types/blog.types";
-
-export const blogs: Blog[] = [
+const blogs = [
     {
         title: {
             en: "Building Production Grade MERN Applications",
@@ -72,7 +70,7 @@ Production systems should prioritize:
 - scalability
 - maintainability
 - consistency
-`
+`,
         },
 
         slug: "production-grade-mern-apps",
@@ -149,3 +147,33 @@ Production systems should prioritize:
         publishedAt: "2026-05-01T14:20:00.000Z",
     },
 ];
+
+function search(text) {
+    // Convert sentence into array
+    const searchWords = text.toLowerCase().split(" ");
+
+    const searchedBlogs = blogs.filter((blog) => {
+        // Combine searchable text
+        const title = Object.values(blog.title).join(" ").toLowerCase();
+
+        //Object.values(blog.title) --> convert object into Array
+        //join(" ") --> converts array into string
+
+        const content = Object.values(blog.content).join(" ").toLowerCase();
+
+        const tags = blog.tags.join(" ").toLowerCase();
+
+        // Check if any search word exists
+        return searchWords.some((word) => {
+            return (
+                title.includes(word) ||
+                content.includes(word) ||
+                tags.includes(word)
+            );
+        });
+    });
+
+    return searchedBlogs;
+}
+
+console.log(search(""));

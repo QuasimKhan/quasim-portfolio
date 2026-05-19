@@ -63,7 +63,7 @@ const blogSchema =
 
             isPublished: {
                 type: Boolean,
-                default: false,
+                default: true,
             },
 
             readingTime: {

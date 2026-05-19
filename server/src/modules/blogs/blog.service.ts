@@ -45,3 +45,20 @@ export const createBlog = async (
 
     return blog;
 };
+
+export const getBlogs = async () => {
+    const blogs = await Blog.find({ isPublished: true }).sort({ createdAt: -1 });
+
+    return blogs;
+}
+
+
+export const getBlogByslug = async (slug: string) => {
+    const blog = await Blog.findOne({
+        slug,
+        isPublished: true
+    });
+
+
+    return blog;
+}

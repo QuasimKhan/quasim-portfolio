@@ -2,9 +2,8 @@ import Container from "@/components/common/container";
 import Section from "@/components/common/section";
 import SectionHeading from "@/components/common/section-heading";
 
-import BlogCard from "@/components/blogs/blog-card";
-
 import { blogs } from "@/constants/blogs";
+import BlogCard from "@/features/blogs/components/blog-card";
 
 const BlogSection = () => {
     return (

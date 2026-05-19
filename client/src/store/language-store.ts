@@ -1,6 +1,6 @@
 import { create } from "zustand"
 
-import type { BlogLanguage } from "@/types/blog.types"
+import type { BlogLanguage } from "@/features/blogs/types/blog.types"
 
 interface LanguageStore {
     language: BlogLanguage;

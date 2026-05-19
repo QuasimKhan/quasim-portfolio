@@ -11,7 +11,7 @@ const HeroSection = () => {
     return (
         <Section className="relative overflow-hidden">
             {/* Grid Background */}
-            <div className="absolute inset-0 -z-30 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:6rem_6rem]" />
+            <div className="absolute inset-0 -z-30 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-size-[6rem_6rem]" />
 
             {/* Main Glow */}
             <div className="absolute inset-0 -z-20 overflow-hidden">
@@ -25,7 +25,7 @@ const HeroSection = () => {
                         repeat: Infinity,
                         ease: "easeInOut",
                     }}
-                    className="absolute left-1/2 top-0 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-white/10 blur-3xl"
+                    className="absolute left-1/2 top-0 h-125 w-125 -translate-x-1/2 rounded-full bg-white/10 blur-3xl"
                 />
             </div>
 

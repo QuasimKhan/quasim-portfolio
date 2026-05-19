@@ -1,12 +1,15 @@
-import { useLanguageStore } from "@/store/language-store";
-import type { Blog } from "@/types/blog.types";
-
-import { getLanguageContent } from "@/utils/get-language-content";
-import { getLanguageDirection } from "@/utils/get-language-direction";
-
 import { ArrowUpRight, Clock3 } from "lucide-react";
 
 import { Link } from "react-router-dom";
+
+import { cn } from "@/lib/utils";
+
+import type { Blog } from "@/features/blogs/types/blog.types";
+
+import { useLanguageStore } from "@/store/language-store";
+
+import { getLanguageContent } from "@/utils/get-language-content";
+import { getLanguageDirection } from "@/utils/get-language-direction";
 
 interface BlogCardProps {
     blog: Blog;
@@ -14,25 +17,31 @@ interface BlogCardProps {
 
 const BlogCard = ({ blog }: BlogCardProps) => {
     const { language } = useLanguageStore();
-    const direction = getLanguageDirection(language);
+
+    const titleData = getLanguageContent(blog.title, language);
+
+    const excerptData = blog.excerpt
+        ? getLanguageContent(blog.excerpt, language)
+        : null;
+
+    const direction = getLanguageDirection(titleData.language);
 
     const isRTL = direction === "rtl";
-    const title = getLanguageContent(blog.title, language);
-
-    const excerpt = blog.excerpt
-        ? getLanguageContent(blog.excerpt, language)
-        : "";
 
     return (
         <Link to={`/blogs/${blog.slug}`} className="group block h-full">
             <article
-                className="relative flex h-full flex-col overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.03] backdrop-blur-xl transition-all duration-500 hover:-translate-y-1.5 hover:border-white/20 hover:bg-white/[0.05]"
                 dir={direction}
+                className={cn(
+                    "relative flex h-full flex-col overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.03] backdrop-blur-xl transition-all duration-500 hover:-translate-y-1.5 hover:border-white/20 hover:bg-white/[0.05]",
+
+                    isRTL ? "text-right" : "text-left",
+                )}
             >
                 {/* Glow */}
                 <div className="absolute inset-0 bg-gradient-to-br from-white/[0.06] via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
-                {/* Image */}
+                {/* Cover Image */}
                 <div className="relative overflow-hidden">
                     <div className="aspect-video overflow-hidden">
                         <img
@@ -40,7 +49,7 @@ const BlogCard = ({ blog }: BlogCardProps) => {
                                 blog.coverImage ||
                                 "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop"
                             }
-                            alt={title}
+                            alt={titleData.content}
                             className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                         />
                     </div>
@@ -50,7 +59,7 @@ const BlogCard = ({ blog }: BlogCardProps) => {
 
                     {/* Language Badge */}
                     <div className="absolute left-5 top-5 flex items-center gap-2 rounded-full border border-white/10 bg-black/40 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/70 backdrop-blur-md">
-                        {blog.language.join(", ")}
+                        {titleData.language.toUpperCase()}
                     </div>
                 </div>
 
@@ -58,7 +67,7 @@ const BlogCard = ({ blog }: BlogCardProps) => {
                 <div className="relative flex flex-1 flex-col justify-between p-7">
                     <div className="space-y-5">
                         {/* Meta */}
-                        <div className="flex items-center gap-4 text-xs text-white/40">
+                        <div className="flex flex-wrap items-center gap-4 text-xs text-white/40">
                             <div className="flex items-center gap-1.5">
                                 <Clock3 className="size-3.5" />
 
@@ -78,19 +87,29 @@ const BlogCard = ({ blog }: BlogCardProps) => {
                             )}
                         </div>
 
-                        {/* Title */}
+                        {/* Text Content */}
                         <div className="space-y-4">
                             <h3
-                                className={`line-clamp-2 text-2xl font-semibold leading-tight tracking-tight text-white transition-colors duration-300 group-hover:text-white/90 ${isRTL ? "text-right" : "text-left"}`}
+                                className={cn(
+                                    "line-clamp-2 text-2xl font-semibold leading-tight tracking-tight text-white transition-colors duration-300 group-hover:text-white/90",
+
+                                    isRTL && "leading-[1.9]",
+                                )}
                             >
-                                {title}
+                                {titleData.content}
                             </h3>
 
-                            <p
-                                className={`line-clamp-3 text-[15px] leading-7 text-white/55 ${isRTL ? "text-right" : "text-left"}`}
-                            >
-                                {excerpt}
-                            </p>
+                            {excerptData && (
+                                <p
+                                    className={cn(
+                                        "line-clamp-3 text-[15px] leading-7 text-white/55",
+
+                                        isRTL && "leading-[2.2]",
+                                    )}
+                                >
+                                    {excerptData.content}
+                                </p>
+                            )}
                         </div>
 
                         {/* Tags */}
