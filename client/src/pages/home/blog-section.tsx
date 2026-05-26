@@ -2,10 +2,42 @@ import Container from "@/components/common/container";
 import Section from "@/components/common/section";
 import SectionHeading from "@/components/common/section-heading";
 
-import { blogs } from "@/constants/blogs";
+import { getBlogs } from "@/features/blogs/api/blog-api";
 import BlogCard from "@/features/blogs/components/blog-card";
+import { queryKeys } from "@/lib/query-keys";
+import { useQuery } from "@tanstack/react-query";
 
 const BlogSection = () => {
+    const { data, isLoading, isError } = useQuery({
+        queryKey: queryKeys.blogs,
+        queryFn: getBlogs,
+    });
+
+    const blogs = data?.data || [];
+
+    if (isLoading) {
+        return (
+            <Section>
+                <Container>
+                    <div className="flex min-h-[50vh] items-center justify-center">
+                        <p className="text-white/60">Loading blogs...</p>
+                    </div>
+                </Container>
+            </Section>
+        );
+    }
+
+    if (isError) {
+        return (
+            <Section>
+                <Container>
+                    <div className="flex min-h-[50vh] items-center justify-center">
+                        <p className="text-red-400">Failed to load blogs.</p>
+                    </div>
+                </Container>
+            </Section>
+        );
+    }
     return (
         <Section>
             <Container>

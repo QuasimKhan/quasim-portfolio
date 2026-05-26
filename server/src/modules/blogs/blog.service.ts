@@ -62,3 +62,9 @@ export const getBlogByslug = async (slug: string) => {
 
     return blog;
 }
+
+export const updateBlog = async (id: string, payload: Partial<CreateBlogPayload>) => {
+    const updatedBlog = await Blog.findByIdAndUpdate(id, payload, { new: true })
+
+    return updatedBlog
+}

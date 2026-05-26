@@ -24,3 +24,6 @@ export const createBlogSchema = z.object({
         z.enum(["en", "hi", "ur", "ru"])
     ),
 });
+
+
+export const updateBlogSchema = createBlogSchema.partial()

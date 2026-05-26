@@ -13,7 +13,7 @@ import { getLanguageContent } from "@/utils/get-language-content";
 import { getLanguageDirection } from "@/utils/get-language-direction";
 import { extractMarkdownHeadings } from "@/features/blogs/utils/extract-markdown-headings";
 import { useQuery } from "@tanstack/react-query";
-import { getBlogByslug } from "@/features/blogs/api/blog-api";
+import { getBlogBySlug } from "@/features/blogs/api/blog-api";
 import { queryKeys } from "@/lib/query-keys";
 import ReadingProgressBar from "@/features/blogs/components/reading-progress-bar";
 import MarkdownRenderer from "@/features/blogs/components/markdown-renderer";
@@ -27,7 +27,7 @@ const BlogDetailsPage = () => {
     const { data, isLoading, isError } = useQuery({
         queryKey: queryKeys.blog(slug || ""),
 
-        queryFn: () => getBlogByslug(slug || ""),
+        queryFn: () => getBlogBySlug(slug || ""),
 
         enabled: !!slug,
     });
