@@ -6,4 +6,7 @@ export const queryKeys = {
         "blog",
         slug
     ],
+
+    projects: ["projects"],
 }
+

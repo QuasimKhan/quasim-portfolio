@@ -1,16 +1,15 @@
 {
   "name": "quasim-portfolio",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "directories": {
-    "doc": "docs"
-  },
+  "private": true,
+  "type": "commonjs",
   "scripts": {
-    "dev": "tsx watch server/src/server.ts"
+    "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
+    "dev:client": "npm run dev --prefix client",
+    "dev:server": "tsx watch server/src/server.ts"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs"
+  "devDependencies": {
+    "concurrently": "^9.0.1",
+    "tsx": "^4.19.0"
+  }
 }

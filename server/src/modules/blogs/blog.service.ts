@@ -46,11 +46,104 @@ export const createBlog = async (
     return blog;
 };
 
-export const getBlogs = async () => {
-    const blogs = await Blog.find({ isPublished: true }).sort({ createdAt: -1 });
+export const getBlogs = async (
+    page: number = 1,
+    limit: number = 6,
+    search: string = "",
+    language: string = "all"
+) => {
+    const skipIndex = (page - 1) * limit;
 
-    return blogs;
-}
+    const query: any = {
+        isPublished: true,
+    };
+
+    // Search
+    if (search.trim()) {
+        query.$or = [
+            {
+                "title.en": {
+                    $regex: search,
+                    $options: "i",
+                },
+            },
+            {
+                "title.hi": {
+                    $regex: search,
+                    $options: "i",
+                },
+            },
+            {
+                "title.ur": {
+                    $regex: search,
+                    $options: "i",
+                },
+            },
+            {
+                "title.ru": {
+                    $regex: search,
+                    $options: "i",
+                },
+            },
+            {
+                "excerpt.en": {
+                    $regex: search,
+                    $options: "i",
+                },
+            },
+            {
+                "excerpt.hi": {
+                    $regex: search,
+                    $options: "i",
+                },
+            },
+            {
+                "excerpt.ur": {
+                    $regex: search,
+                    $options: "i",
+                },
+            },
+            {
+                "excerpt.ru": {
+                    $regex: search,
+                    $options: "i",
+                },
+            },
+            {
+                tags: {
+                    $elemMatch: {
+                        $regex: search,
+                        $options: "i",
+                    },
+                },
+            },
+        ];
+    }
+
+    // Language Filter
+    if (language !== "all") {
+        query.language = language;
+    }
+
+    const [blogs, totalBlogs] = await Promise.all([
+        Blog.find(query)
+            .sort({ createdAt: -1 })
+            .skip(skipIndex)
+            .limit(limit),
+
+        Blog.countDocuments(query),
+    ]);
+
+    const hasNextPage =
+        skipIndex + blogs.length < totalBlogs;
+
+    return {
+        blogs,
+        nextPage: hasNextPage
+            ? page + 1
+            : undefined,
+    };
+};
 
 
 export const getBlogByslug = async (slug: string) => {

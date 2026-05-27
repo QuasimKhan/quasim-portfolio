@@ -4,14 +4,16 @@ import { Button } from "@/components/ui/button";
 
 interface ProjectCardProps {
     title: string;
+    image?: string;
     description: string;
     techStack: string[];
-    githubUrl: string;
-    liveUrl: string;
+    githubUrl?: string;
+    liveUrl?: string;
 }
 
 const ProjectCard = ({
     title,
+    image,
     description,
     techStack,
     githubUrl,
@@ -20,7 +22,16 @@ const ProjectCard = ({
     return (
         <div className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-sm transition duration-300 hover:border-white/20 hover:bg-white/[0.07]">
             <div className="space-y-8">
-                <div>{}</div>
+                {/* Logo Section */}
+                {image && (
+                    <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl border border-white/10 bg-white/5 p-2">
+                        <img
+                            src={image}
+                            alt={`${title} logo`}
+                            className="h-full w-full object-contain"
+                        />
+                    </div>
+                )}
                 <div className="space-y-4">
                     <h3 className="text-2xl font-semibold text-white">
                         {title}

@@ -131,7 +131,7 @@ const BlogCard = ({ blog }: BlogCardProps) => {
                     <div className="mt-8 flex items-center text-sm font-medium tracking-wide text-white/70 transition-colors duration-300 group-hover:text-white">
                         <span>Read Article</span>
 
-                        <ArrowUpRight className="ml-2 size-4 transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1" />
+                        <ArrowUpRight className="text-emerald-500 ml-2 size-4 transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1" />
                     </div>
                 </div>
             </article>

@@ -57,7 +57,7 @@ const Navbar = () => {
                                     <>
                                         {link.label}
                                         {isActive && (
-                                            <span className="absolute bottom-1 left-4 right-4 h-[2px] bg-white rounded-full" />
+                                            <span className="absolute bottom-1 left-4 right-4 h-0.5 bg-emerald-500 rounded-full" />
                                         )}
                                     </>
                                 )}

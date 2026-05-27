@@ -11,6 +11,7 @@ import BlogDetailsPage from "@/features/blogs/pages/blog-details-page";
 import CreateBlogPage from "@/features/admin/pages/create-blog-page";
 
 import EditBlogPage from "@/features/admin/pages/edit-blog-page";
+import ProjectsPage from "@/features/projects/pages/projects-page";
 
 const AppRoutes = () => {
     return (
@@ -22,6 +23,7 @@ const AppRoutes = () => {
                 <Route path="/blogs" element={<BlogsPage />} />
 
                 <Route path="/blogs/:slug" element={<BlogDetailsPage />} />
+                <Route path="/projects" element={<ProjectsPage />} />
 
                 {/* Admin Routes */}
                 <Route

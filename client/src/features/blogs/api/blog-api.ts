@@ -6,18 +6,31 @@ import type { ApiResponse } from "@/types/api.types";
 
 import type { CreateBlogInput } from "@/features/admin/schemas/create-blog-schema";
 
-export const getBlogs =
-    async (): Promise<
-        ApiResponse<Blog[]>
-    > => {
+export const getBlogs = async ({
+    pageParam = 1,
+    search = "",
+    language = "all",
+}: {
+    pageParam?: number;
+    search?: string;
+    language?: string;
+}): Promise<
+    ApiResponse<Blog[]> & {
+        nextPage?: number;
+    }
+> => {
 
-        const response =
-            await axiosInstance.get<
-                ApiResponse<Blog[]>
-            >("/blogs");
+    const response =
+        await axiosInstance.get<
+            ApiResponse<Blog[]> & {
+                nextPage?: number;
+            }
+        >(
+            `/blogs?page=${pageParam}&limit=6&search=${search}&language=${language}`
+        );
 
-        return response.data;
-    };
+    return response.data;
+};
 
 export const getBlogBySlug =
     async (

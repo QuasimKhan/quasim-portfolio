@@ -16,16 +16,48 @@ export const createBlogController = asyncHandler(async (req: Request, res: Respo
     });
 })
 
-export const getBlogsController = asyncHandler(async (req: Request, res: Response) => {
-    const blogs = await getBlogs();
-    res.status(200).json({
-        success: true,
-        data: blogs
-    })
+export const getBlogsController =
+    asyncHandler(
+        async (
+            req: Request,
+            res: Response
+        ) => {
 
+            const page =
+                parseInt(
+                    req.query.page as string
+                ) || 1;
 
+            const limit =
+                parseInt(
+                    req.query.limit as string
+                ) || 6;
 
-})
+            const search =
+                (req.query.search as string)
+                || "";
+
+            const language =
+                (req.query.language as string)
+                || "all";
+
+            const {
+                blogs,
+                nextPage
+            } = await getBlogs(
+                page,
+                limit,
+                search,
+                language
+            );
+
+            res.status(200).json({
+                success: true,
+                data: blogs,
+                nextPage,
+            });
+        }
+    );
 
 
 export const getBlogBySlugController = asyncHandler(async (req: Request, res: Response) => {
